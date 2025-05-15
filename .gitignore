@@ -1,1 +1,3 @@
-a.out
+# Ignore object files and binaries
+*.out
+*.o
