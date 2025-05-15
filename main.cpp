@@ -68,19 +68,19 @@ int main() {
     std::chrono::duration<double> serial_duration 
         = end_time - start_time; 
 
-    std::cout << "hey" << std::endl;
+    // std::cout << "hey" << std::endl;
   
     start_time = std::chrono::high_resolution_clock::now(); 
 
-    Matrix result_parallel = dotProduct_parallel_for(matrix_C, matrix_D); 
+    Matrix result_parallel = dot_product_coarse_grained(matrix_C, matrix_D); 
     end_time = std::chrono::high_resolution_clock::now(); 
     std::chrono::duration<double> parallel_duration 
         = end_time - start_time; 
   
-    std::cout << "Serial result: " << result_serial 
-              << std::endl; 
-    std::cout << "Parallel result: " << result_parallel 
-              << std::endl; 
+    // std::cout << "Serial result: " << result_serial 
+    //           << std::endl; 
+    // std::cout << "Parallel result: " << result_parallel 
+    //           << std::endl; 
     std::cout << "Serial duration: "
               << serial_duration.count() << " seconds"
               << std::endl; 
