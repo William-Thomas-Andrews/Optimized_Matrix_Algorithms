@@ -1,0 +1,99 @@
+#include <iostream>
+#include <string>
+#include <stdexcept> 
+#include <vector>
+#include <initializer_list>
+#include <cmath>
+#include <cstdlib>
+#include <ranges>
+#include <concepts> 
+#include <iomanip>
+#include <thread>
+#include <future>
+#include <type_traits>
+#include <variant>
+#include <any>
+#include <execution>
+#include <algorithm>
+// #include <omp.h>
+#include <chrono> 
+#include <random>
+#include "matrix.cpp"
+
+
+
+
+
+int main() {
+    const int size = 10000;
+    std::vector<double> vector1(size);
+    std::vector<double> vector2(size);
+    std::vector<double> vector3(size);
+    std::vector<double> vector4(size);
+
+    // Initialize random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(1.0, 10000.0);
+
+    // Fill vectors with random values
+    for (int i = 0; i < size; ++i) {
+        vector1[i] = dis(gen);
+        vector2[i] = dis(gen);
+        vector3[i] = dis(gen);
+        vector4[i] = dis(gen);
+    }
+
+    Matrix matrix_A = Matrix(vector1, 100, 100);
+    Matrix matrix_B = Matrix(vector2, 100, 100);
+    Matrix matrix_C = Matrix(vector1, 100, 100);
+    Matrix matrix_D = Matrix(vector2, 100, 100);
+
+    
+    // std::vector<double> vec = {1, 2, 3, 4, 5, 6, 7, 8};
+    // Matrix matrix_A = Matrix(vec, 2, 4);
+    // Matrix matrix_B = Matrix(vec, 4, 2);
+    // std::cout << matrix_A << std::endl;
+
+    const int n = 100000; 
+  
+    auto start_time 
+        = std::chrono::high_resolution_clock::now(); 
+  
+    Matrix result_serial = dotProduct_serial(matrix_A, matrix_B); 
+  
+    auto end_time 
+        = std::chrono::high_resolution_clock::now(); 
+  
+    std::chrono::duration<double> serial_duration 
+        = end_time - start_time; 
+
+    std::cout << "hey" << std::endl;
+  
+    start_time = std::chrono::high_resolution_clock::now(); 
+
+    Matrix result_parallel = dotProduct_parallel_for(matrix_C, matrix_D); 
+    end_time = std::chrono::high_resolution_clock::now(); 
+    std::chrono::duration<double> parallel_duration 
+        = end_time - start_time; 
+  
+    std::cout << "Serial result: " << result_serial 
+              << std::endl; 
+    std::cout << "Parallel result: " << result_parallel 
+              << std::endl; 
+    std::cout << "Serial duration: "
+              << serial_duration.count() << " seconds"
+              << std::endl; 
+    std::cout << "Parallel duration: "
+              << parallel_duration.count() << " seconds"
+              << std::endl; 
+    std::cout << "Speedup: "
+              << serial_duration.count() 
+                     / parallel_duration.count()
+              << " times the parallel speed." 
+              << std::endl; 
+    
+    std::cout << matrix_A(1, 0) << std::endl;
+
+    return 0; 
+}
