@@ -1,5 +1,5 @@
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
+#pragma once
+
 
 #include <array>
 #include <iostream>
@@ -22,8 +22,9 @@
 // #include <omp.h>
 #include <chrono> 
 #include <random>
-// #include "matrix.cpp"
-// #include "dot_product_functions.cpp"
+
+
+
 
 // template<int ROW, int COL>
 class Matrix {
@@ -34,32 +35,10 @@ class Matrix {
     // int size = data.size();
     
 public:
-    Matrix(int r, int c) : rows(r), columns(c), data(r*c, 0.0) {
-        // data = std::vector<double>(rows*columns, 0); // Initializes data to all 0s
-    }
-    Matrix(int item, int r, int c) : rows(r), columns(c), data(r*c, item) {
-        // for (int i = 0; i < size; i++) {
-        //     data.push_back(item); // Initializes all data to the specified item input
-        // }
-    }
-    Matrix(const std::vector<double> input_data, int r, int c) : rows(r), columns(c), data(input_data) {
-        if (input_data.size() != r*c) {
-            throw std::invalid_argument("Size of array does not match dimension sizes.");
-        }
-        // for (int i = 0; i < size; i++) {
-        //     data.push_back(input_data[i]);
-        // }
-        // size = data.size();
-    }
-    Matrix(const double* input_data, int input_data_size, int r, int c) : rows(r), columns(c), data(input_data, input_data + input_data_size) {
-        if (input_data_size != r*c) {
-            throw std::invalid_argument("Size of array does not match dimension sizes."); 
-        }
-        // for (int i = 0; i < input_data_size; i++) {
-        //     data.push_back(input_data[i]);
-        // }
-        // size = data.size();
-    }
+    Matrix(int r, int c) : rows(r), columns(c), data(r*c, 0.0) {}
+    Matrix(int item, int r, int c) : rows(r), columns(c), data(r*c, item) {}
+    Matrix(const std::vector<double> input_data, int r, int c) : rows(r), columns(c), data(input_data) { if (input_data.size() != r*c) { throw std::invalid_argument("Size of array does not match dimension sizes."); } }
+    Matrix(const double* input_data, int input_data_size, int r, int c) : rows(r), columns(c), data(input_data, input_data + input_data_size) { if (input_data_size != r*c) { throw std::invalid_argument("Size of array does not match dimension sizes."); } }
     // template
     // Matrix(const std::array<int, > input_data) {
     //     if (input_data.size() != size) {
@@ -69,12 +48,8 @@ public:
     //         data[i] = input_data[i];
     //     }
     // }
-
     ~Matrix() {}
-
-    void print() {
-        std::cout << get_string();
-    }
+    void print() { std::cout << get_string(); }
 
     // Operators
     Matrix operator()(int row_index) const { // Index operator, returns a new vector of the same data (still a matrix)
@@ -286,8 +261,8 @@ public:
 
 // template <int ROW, int COL>
 std::ostream& operator<<(std::ostream& os, Matrix& A) {
-os << A.get_string();
-return os;
+    os << A.get_string();
+    return os;
 }
 
-#endif // MATRIX_HPP
+// #endif // MATRIX_HPP

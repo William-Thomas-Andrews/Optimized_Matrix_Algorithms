@@ -6,7 +6,7 @@
 
 
 int main() {
-    const int size = 1000*1000;
+    const int size = 500*500;
     std::vector<double> vector1(size);
     std::vector<double> vector2(size);
     std::vector<double> vector3(size);
@@ -30,10 +30,10 @@ int main() {
     // Matrix<100, 100> matrix_C = Matrix<100, 100>(vector1);
     // Matrix<100, 100> matrix_D = Matrix<100, 100>(vector2);
 
-    Matrix matrix_A = Matrix(vector1, 1000, 1000);
-    Matrix matrix_B = Matrix(vector2, 1000, 1000);
-    Matrix matrix_C = Matrix(vector1, 1000, 1000);
-    Matrix matrix_D = Matrix(vector2, 1000, 1000);
+    Matrix matrix_A = Matrix(vector1, 500, 500);
+    Matrix matrix_B = Matrix(vector2, 500, 500);
+    Matrix matrix_C = Matrix(vector1, 500, 500);
+    Matrix matrix_D = Matrix(vector2, 500, 500);
     
     // std::vector<double> vec = {1, 2, 3, 4, 5, 6, 7, 8};
     // Matrix matrix_A = Matrix(vec, 2, 4);
@@ -52,33 +52,35 @@ int main() {
   
     std::chrono::duration<double> serial_duration 
         = end_time - start_time; 
-
-    // std::cout << "hey" << std::endl;
   
-    // start_time = std::chrono::high_resolution_clock::now(); 
+    start_time = std::chrono::high_resolution_clock::now(); 
 
-    // Matrix result_parallel = dot_product_coarse_grained(matrix_C, matrix_D); 
-    // end_time = std::chrono::high_resolution_clock::now(); 
-    // std::chrono::duration<double> parallel_duration 
-    //     = end_time - start_time; 
+    Matrix result_parallel = dot_parallel_for(matrix_C, matrix_D); 
+    end_time = std::chrono::high_resolution_clock::now(); 
+    std::chrono::duration<double> parallel_duration 
+        = end_time - start_time; 
   
     // std::cout << "Serial result: " << result_serial 
-    //           << std::endl; 
+            //   << std::endl; 
     // std::cout << "Parallel result: " << result_parallel 
-    //           << std::endl; 
+            //   << std::endl; 
     std::cout << "Serial duration: "
               << serial_duration.count() << " seconds"
               << std::endl; 
-    // std::cout << "Parallel duration: "
-            //   << parallel_duration.count() << " seconds"
-            //   << std::endl; 
-    // std::cout << "Speedup: "
-            //   << serial_duration.count() 
-                    //  / parallel_duration.count()
-            //   << " times the parallel speed." 
-            //   << std::endl; 
+    std::cout << "Parallel duration: "
+              << parallel_duration.count() << " seconds"
+              << std::endl; 
+    std::cout << "Speedup: "
+              << serial_duration.count() 
+                     / parallel_duration.count()
+              << " times the parallel speed." 
+              << std::endl; 
     
-    // std::cout << matrix_A(1, 0) << std::endl;
+    std::cout << matrix_A(1, 0) << std::endl;
+
+    if (result_serial == result_parallel) {
+        std::cout << "Results are equal" << std::endl;
+    }
 
     return 0; 
 }

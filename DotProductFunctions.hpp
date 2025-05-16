@@ -1,9 +1,7 @@
-// #ifndef DOT_PRODUCT_HPP
-// #define DOT_PRODUCT_HPP
-
 #pragma once
 
 #include "Matrix.hpp"
+#include <tbb/parallel_for.h> 
 
 // Normal Dot Product
 // template <int ROW_A, int COL_A, int ROW_B, int COL_B>
@@ -34,32 +32,31 @@ Matrix dot_serial(const Matrix& A, const Matrix& B) {
 
 // There is a race condition here that needs to be eliminated
 // parallel_for - #include <tbb/parallel_for.h> 
-// g++ -std=c++17 -I/opt/homebrew/Cellar/tbb/2022.0.0/include -L/opt/homebrew/Cellar/tbb/2022.0.0/lib -ltbb 0_static.cpp && ./a.out
-// Matrix dot_parallel_for(const Matrix& A, const Matrix& B) {
-//     std::atomic<int> operations = 0;
-//     if (A.columns != B.rows)
-//     {
-//         throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows.");
-//     }
-//     Matrix to_return = Matrix(A.rows, B.columns);
-//     tbb::parallel_for(tbb::blocked_range<int>(0, A.rows),
-//                 [&](tbb::blocked_range<int> r)
-//     {
-//         for (int i = r.begin(); i < r.end(); i++)
-//         {
-//             for (int j = 0; j < B.columns; j++)
-//             {
-//                 for (int k = 0; k < B.rows; k++)
-//                 {
-//                     to_return(i, j) += A(i, k) * B(k, j);
-//                     operations++;
-//                 }
-//             }
-//         }
-//     });
-//     std::cout << "This parallel_for algorithm had " << operations << " number of operations\n";
-//     return to_return;
-// }
+// g++ -std=c++2b -I/opt/homebrew/Cellar/tbb/2022.0.0/include -L/opt/homebrew/Cellar/tbb/2022.0.0/lib -ltbb Main.cpp && ./a.out
+Matrix dot_parallel_for(const Matrix& A, const Matrix& B) {
+    std::atomic<int> operations = 0;
+    if (A.columns != B.rows) {
+        throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows.");
+    }
+    Matrix to_return = Matrix(A.rows, B.columns);
+    tbb::parallel_for(tbb::blocked_range<int>(0, A.rows),
+                [&](tbb::blocked_range<int> r)
+    {
+        for (int i = r.begin(); i < r.end(); i++)
+        {
+            for (int j = 0; j < B.columns; j++)
+            {
+                for (int k = 0; k < B.rows; k++)
+                {
+                    to_return(i, j) += A(i, k) * B(k, j);
+                    operations++;
+                }
+            }
+        }
+    });
+    std::cout << "This parallel_for algorithm had " << operations << " number of operations\n";
+    return to_return;
+}
 
 
 // // c++ STL parallel for
@@ -160,4 +157,3 @@ Matrix dot_serial(const Matrix& A, const Matrix& B) {
 //     return to_return;
 // }
 
-// #endif // DOT_PRODUCT_HPP
