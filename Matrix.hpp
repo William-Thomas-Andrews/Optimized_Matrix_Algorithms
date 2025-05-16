@@ -252,8 +252,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& A);
     friend Matrix dot_serial(const Matrix& A, const Matrix& B);
-    friend Matrix dot_parallel_for(const Matrix& A, const Matrix& B);
-    // friend Matrix dotProduct_parallel_for_STL(const Matrix& A, const Matrix& B);
+    friend Matrix dot_static_parallel_for(const Matrix& A, const Matrix& B);
+    friend Matrix dot_dynamic_parallel_for(const Matrix& A, const Matrix& B);
     friend Matrix dot_coarse_grained(const Matrix& A, const Matrix& B);
     friend Matrix dot_fine_grained(const Matrix& A, const Matrix& B);
     // friend Matrix transpose(const Matrix& A);

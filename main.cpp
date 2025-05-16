@@ -42,44 +42,37 @@ int main() {
 
     const int n = 100000; 
   
-    auto start_time 
-        = std::chrono::high_resolution_clock::now(); 
-  
+    auto start_time = std::chrono::high_resolution_clock::now(); 
     Matrix result_serial = dot_serial(matrix_A, matrix_B); 
-  
-    auto end_time 
-        = std::chrono::high_resolution_clock::now(); 
-  
-    std::chrono::duration<double> serial_duration 
-        = end_time - start_time; 
-  
+    auto end_time = std::chrono::high_resolution_clock::now(); 
+    std::chrono::duration<double> serial_duration = end_time - start_time; 
     start_time = std::chrono::high_resolution_clock::now(); 
-
-    Matrix result_parallel = dot_parallel_for(matrix_C, matrix_D); 
+    Matrix result_static_parallel_for = dot_static_parallel_for(matrix_C, matrix_D); 
     end_time = std::chrono::high_resolution_clock::now(); 
-    std::chrono::duration<double> parallel_duration 
-        = end_time - start_time; 
+    std::chrono::duration<double> static_parallel_for_duration = end_time - start_time; 
+
+    start_time = std::chrono::high_resolution_clock::now(); 
+    Matrix result_dynamic_parallel_for = dot_dynamic_parallel_for(matrix_C, matrix_D); 
+    end_time = std::chrono::high_resolution_clock::now(); 
+    std::chrono::duration<double> dynamic_parallel_for_duration = end_time - start_time; 
   
     // std::cout << "Serial result: " << result_serial 
             //   << std::endl; 
     // std::cout << "Parallel result: " << result_parallel 
             //   << std::endl; 
-    std::cout << "Serial duration: "
-              << serial_duration.count() << " seconds"
-              << std::endl; 
-    std::cout << "Parallel duration: "
-              << parallel_duration.count() << " seconds"
-              << std::endl; 
-    std::cout << "Speedup: "
-              << serial_duration.count() 
-                     / parallel_duration.count()
-              << " times the parallel speed." 
-              << std::endl; 
+    std::cout << "Serial duration: "<< serial_duration.count() << " seconds" << std::endl; 
+    std::cout << "Static partitioned parallel_for duration: " << static_parallel_for_duration.count() << " seconds" << std::endl; 
+    // std::cout << "Speedup: " << serial_duration.count() / static_parallel_for_duration.count() << " times the parallel speed." << std::endl; 
+    std::cout << "Dynamic partitioned parallel_for duration: " << dynamic_parallel_for_duration.count() << " seconds" << std::endl; 
     
     std::cout << matrix_A(1, 0) << std::endl;
 
-    if (result_serial == result_parallel) {
+    if (result_serial == result_static_parallel_for) {
         std::cout << "Results are equal" << std::endl;
+    }
+
+    if (matrix_C == matrix_D) {
+        std::cout << "Test matrices are equal" << std::endl;
     }
 
     return 0; 

@@ -9,19 +9,16 @@
 // Matrix<ROW_A, COL_B> dot_serial(const Matrix<ROW_A, COL_A>& A, const Matrix<ROW_B, COL_B>& B)
 Matrix dot_serial(const Matrix& A, const Matrix& B) {
     int operations = 0;
-    if (A.columns != B.rows)
-    {
+    if (A.columns != B.rows) {
         throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows.");
     }
     // Matrix<ROW_A, COL_B> result = Matrix<ROW_A, COL_B>();
     Matrix result = Matrix(A.rows, B.columns);
     for (int i = 0; i < A.rows; i++) {
-        for (int j = 0; j < B.columns; j++)
-        {
-            for (int k = 0; k < B.rows; k++)
-            {
+        for (int j = 0; j < B.columns; j++) {
+            for (int k = 0; k < B.rows; k++) {
                 result(i, j) += A(i, k) * B(k, j);
-                operations++;
+                // operations++;
             }
         }
     }
@@ -33,27 +30,46 @@ Matrix dot_serial(const Matrix& A, const Matrix& B) {
 // There is a race condition here that needs to be eliminated
 // parallel_for - #include <tbb/parallel_for.h> 
 // g++ -std=c++2b -I/opt/homebrew/Cellar/tbb/2022.0.0/include -L/opt/homebrew/Cellar/tbb/2022.0.0/lib -ltbb Main.cpp && ./a.out
-Matrix dot_parallel_for(const Matrix& A, const Matrix& B) {
+Matrix dot_static_parallel_for(const Matrix& A, const Matrix& B) {
     std::atomic<int> operations = 0;
     if (A.columns != B.rows) {
         throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows.");
     }
     Matrix to_return = Matrix(A.rows, B.columns);
-    tbb::parallel_for(tbb::blocked_range<int>(0, A.rows),
-                [&](tbb::blocked_range<int> r)
-    {
-        for (int i = r.begin(); i < r.end(); i++)
-        {
-            for (int j = 0; j < B.columns; j++)
-            {
-                for (int k = 0; k < B.rows; k++)
-                {
+    tbb::parallel_for(tbb::blocked_range<int>(0, A.rows), [&](tbb::blocked_range<int> r) {
+        for (int i = r.begin(); i < r.end(); i++) {
+            for (int j = 0; j < B.columns; j++) {
+                for (int k = 0; k < B.rows; k++) {
                     to_return(i, j) += A(i, k) * B(k, j);
-                    operations++;
+                    // operations++;
                 }
             }
         }
+        // operations += 50*50;
     });
+    std::cout << "This parallel_for algorithm had " << operations << " number of operations\n";
+    return to_return;
+}
+
+// There is a race condition here that needs to be eliminated
+// parallel_for - #include <tbb/parallel_for.h> 
+// g++ -std=c++2b -I/opt/homebrew/Cellar/tbb/2022.0.0/include -L/opt/homebrew/Cellar/tbb/2022.0.0/lib -ltbb Main.cpp && ./a.out
+Matrix dot_dynamic_parallel_for(const Matrix& A, const Matrix& B) {
+    std::atomic<int> operations = 0;
+    if (A.columns != B.rows) {
+        throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows.");
+    }
+    Matrix to_return = Matrix(A.rows, B.columns);
+    tbb::parallel_for(tbb::blocked_range<int>(0, A.rows), [&](tbb::blocked_range<int> r) {
+        for (int i = r.begin(); i < r.end(); i++) {
+            for (int j = 0; j < B.columns; j++) {
+                for (int k = 0; k < B.rows; k++) {
+                    to_return(i, j) += A(i, k) * B(k, j);
+                    // operations++;
+                }
+            }
+        }
+    }, tbb::static_partitioner());
     std::cout << "This parallel_for algorithm had " << operations << " number of operations\n";
     return to_return;
 }
