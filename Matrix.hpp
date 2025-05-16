@@ -32,22 +32,13 @@ class Matrix {
     int rows;
     int columns;
     std::vector<double> data;
-    // int size = data.size();
     
 public:
     Matrix(int r, int c) : rows(r), columns(c), data(r*c, 0.0) {}
     Matrix(int item, int r, int c) : rows(r), columns(c), data(r*c, item) {}
     Matrix(const std::vector<double> input_data, int r, int c) : rows(r), columns(c), data(input_data) { if (input_data.size() != r*c) { throw std::invalid_argument("Size of array does not match dimension sizes."); } }
     Matrix(const double* input_data, int input_data_size, int r, int c) : rows(r), columns(c), data(input_data, input_data + input_data_size) { if (input_data_size != r*c) { throw std::invalid_argument("Size of array does not match dimension sizes."); } }
-    // template
-    // Matrix(const std::array<int, > input_data) {
-    //     if (input_data.size() != size) {
-    //         throw std::invalid_argument("Size of array does not match dimension sizes.");
-    //     }
-    //     for (int i  = 0; i < input_data.size(); i++) {
-    //         data[i] = input_data[i];
-    //     }
-    // }
+    // TODO std::array input
     ~Matrix() {}
     void print() { std::cout << get_string(); }
 
@@ -254,15 +245,12 @@ public:
     friend Matrix dot_serial(const Matrix& A, const Matrix& B);
     friend Matrix dot_static_parallel_for(const Matrix& A, const Matrix& B);
     friend Matrix dot_dynamic_parallel_for(const Matrix& A, const Matrix& B);
+    friend Matrix dot_for_each(const Matrix& A, const Matrix& B);
     friend Matrix dot_coarse_grained(const Matrix& A, const Matrix& B);
     friend Matrix dot_fine_grained(const Matrix& A, const Matrix& B);
-    // friend Matrix transpose(const Matrix& A);
 };
 
-// template <int ROW, int COL>
 std::ostream& operator<<(std::ostream& os, Matrix& A) {
     os << A.get_string();
     return os;
 }
-
-// #endif // MATRIX_HPP
