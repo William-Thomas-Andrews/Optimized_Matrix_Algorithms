@@ -1,5 +1,7 @@
 #include "Matrix.hpp"
 #include "DotProductFunctions.hpp"
+#include <iomanip>
+
 
 
 
@@ -72,9 +74,9 @@ int main() {
     std::cout << "Dynamic partitioned parallel_for duration: " << dynamic_parallel_for_duration.count() << " seconds" << std::endl; 
     std::cout << "Fine grained duration: " << fine_grained_duration.count() << " seconds" << std::endl; 
     
-    std::cout << result_serial(488, 0) << std::endl;
+    std::cout << std::setprecision(20) << result_serial(488, 0) << std::endl;
 
-    std::cout << result_fine_grained(488, 0) << std::endl;
+    std::cout << std::setprecision(20) << result_fine_grained(488, 0) << std::endl;
 
     if (result_serial == result_fine_grained) {
         std::cout << "Results are equal" << std::endl;
