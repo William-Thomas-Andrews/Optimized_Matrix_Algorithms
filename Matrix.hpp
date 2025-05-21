@@ -35,7 +35,7 @@ class Matrix {
     
 public:
     Matrix(int r, int c) : rows(r), columns(c), data(r*c, 0.0) {}
-    Matrix(int item, int r, int c) : rows(r), columns(c), data(r*c, item) {}
+    Matrix(double item, int r, int c) : rows(r), columns(c), data(r*c, item) {}
     Matrix(const std::vector<double> input_data, int r, int c) : rows(r), columns(c), data(input_data) { if (input_data.size() != r*c) { throw std::invalid_argument("Size of array does not match dimension sizes."); } }
     Matrix(const double* input_data, int input_data_size, int r, int c) : rows(r), columns(c), data(input_data, input_data + input_data_size) { if (input_data_size != r*c) { throw std::invalid_argument("Size of array does not match dimension sizes."); } }
     // TODO std::array input
@@ -112,10 +112,10 @@ public:
     }
     Matrix operator-(const Matrix& other) {
         if (this->rows != other.rows) {
-            throw std::invalid_argument("Row sizes must match to perform matrix addition.");
+            throw std::invalid_argument("Row sizes must match to perform matrix subtraction.");
         }
         if (this->columns != other.columns) {
-            throw std::invalid_argument("Column sizes must match to perform matrix addition.");
+            throw std::invalid_argument("Column sizes must match to perform matrix subtraction.");
         }
         Matrix return_matrix = Matrix(data, this->rows, this->columns);
         for (int i = 0; i < this->get_size(); i++) {
@@ -125,10 +125,10 @@ public:
     }
     Matrix operator*(const Matrix& other) {
         if (this->rows != other.rows) {
-            throw std::invalid_argument("Row sizes must match to perform matrix addition.");
+            throw std::invalid_argument("Row sizes must match to perform matrix multiplication.");
         }
         if (this->columns != other.columns) {
-            throw std::invalid_argument("Column sizes must match to perform matrix addition.");
+            throw std::invalid_argument("Column sizes must match to perform matrix multiplication.");
         }
         Matrix return_matrix = Matrix(data, rows, columns);
         for (int i = 0; i < this->get_size(); i++) {
@@ -138,10 +138,10 @@ public:
     }
     Matrix operator/(const Matrix& other) {
         if (this->rows != other.rows) {
-            throw std::invalid_argument("Row sizes must match to perform matrix addition.");
+            throw std::invalid_argument("Row sizes must match to perform matrix division.");
         }
         if (this->columns != other.columns) {
-            throw std::invalid_argument("Column sizes must match to perform matrix addition.");
+            throw std::invalid_argument("Column sizes must match to perform matrix division.");
         }
         Matrix return_matrix = Matrix(data, rows, columns);
         for (int i = 0; i < this->get_size(); i++) {

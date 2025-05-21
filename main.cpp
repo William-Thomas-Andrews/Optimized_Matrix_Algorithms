@@ -7,10 +7,10 @@
 
 int main() {
     const int size = 500*500;
-    std::vector<double> vector1(size);
-    std::vector<double> vector2(size);
-    std::vector<double> vector3(size);
-    std::vector<double> vector4(size);
+    std::vector<double> vector1(749*499);
+    std::vector<double> vector2(499*849);
+    std::vector<double> vector3(749*499);
+    std::vector<double> vector4(499*849);
 
     // Initialize random number generator
     std::random_device rd;
@@ -30,10 +30,10 @@ int main() {
     // Matrix<100, 100> matrix_C = Matrix<100, 100>(vector1);
     // Matrix<100, 100> matrix_D = Matrix<100, 100>(vector2);
 
-    Matrix matrix_A = Matrix(vector1, 500, 500);
-    Matrix matrix_B = Matrix(vector2, 500, 500);
-    Matrix matrix_C = Matrix(vector1, 500, 500);
-    Matrix matrix_D = Matrix(vector2, 500, 500);
+    Matrix matrix_A = Matrix(vector1, 749, 499);
+    Matrix matrix_B = Matrix(vector2, 499, 849);
+    Matrix matrix_C = Matrix(vector1, 749, 499);
+    Matrix matrix_D = Matrix(vector2, 499, 849);
     
     // std::vector<double> vec = {1, 2, 3, 4, 5, 6, 7, 8};
     // Matrix matrix_A = Matrix(vec, 2, 4);
@@ -72,30 +72,33 @@ int main() {
     std::cout << "Dynamic partitioned parallel_for duration: " << dynamic_parallel_for_duration.count() << " seconds" << std::endl; 
     std::cout << "Fine grained duration: " << fine_grained_duration.count() << " seconds" << std::endl; 
     
-    std::cout << matrix_A(1, 0) << std::endl;
+    std::cout << result_serial(488, 0) << std::endl;
+
+    std::cout << result_fine_grained(488, 0) << std::endl;
 
     if (result_serial == result_fine_grained) {
         std::cout << "Results are equal" << std::endl;
     }
+    // std::cout << result_serial << std::endl;
 
     if (matrix_C == matrix_D) {
         std::cout << "Test matrices are equal" << std::endl;
     }
 
-    Matrix test1 = Matrix({1, 2, 3, 4, 5, 6}, 2, 3);
-    Matrix test2 = Matrix({1, 2, 3, 4, 5 ,6}, 3, 2);
+    // Matrix test1 = Matrix({1, 2, 3, 4, 5, 6}, 2, 3);
+    // Matrix test2 = Matrix({1, 2, 3, 4, 5 ,6}, 3, 2);
 
-    Matrix test_result = dot_fine_grained(test1, test2);
-    std::cout << test_result << std::endl << std::endl;
+    // Matrix test_result = dot_fine_grained(test1, test2);
+    // std::cout << test_result << std::endl << std::endl;
 
-    test_result = dot_static_parallel_for(test1, test2);
-    std::cout << test_result << std::endl << std::endl;
+    // test_result = dot_static_parallel_for(test1, test2);
+    // std::cout << test_result << std::endl << std::endl;
 
-    test_result = dot_dynamic_parallel_for(test1, test2);
-    std::cout << test_result << std::endl << std::endl;
+    // test_result = dot_dynamic_parallel_for(test1, test2);
+    // std::cout << test_result << std::endl << std::endl;
 
-    test_result = dot_serial(test1, test2);
-    std::cout << test_result << std::endl << std::endl;
+    // test_result = dot_serial(test1, test2);
+    // std::cout << test_result << std::endl << std::endl;
 
     return 0; 
 }
