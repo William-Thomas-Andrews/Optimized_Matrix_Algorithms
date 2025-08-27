@@ -32,19 +32,16 @@ The goal is to explore **parallelism in C++** using Intel Threading Building Blo
 On macOS with Homebrew:
 ```bash
 brew install tbb
-## Installation
 ```
 
 On Windows with vcpkg
 ```shell
 vcpkg install tbb
-## Installation
 ```
 
 On Linux (Debian/Ubuntu-based systems) with APT
 ```bash
 sudo apt-get install libtbb-dev
-## Installation
 ```
 
 
