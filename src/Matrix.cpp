@@ -73,7 +73,6 @@ Matrix Matrix::operator+(const Matrix& other) {
         throw std::invalid_argument("Column sizes must match to perform matrix addition.");
     }
     Matrix return_matrix = Matrix(data, rows, columns);
-    // Matrix return_matrix = Matrix(this.data, this.size, this.rows, this.columns);
     for (int i = 0; i < this->get_size(); i++) {
         return_matrix.data[i] += other.data[i];
     }
@@ -123,7 +122,6 @@ void Matrix::operator=(const Matrix& other) {
     for (int i = 0; i < other.get_size(); i++) {
         this->data[i] = other.data[i];
     }
-    // this->size = other.size;
     this->rows = other.rows;
     this->columns = other.columns;
 }

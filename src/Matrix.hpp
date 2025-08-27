@@ -6,7 +6,6 @@
 #include <random>
 
 
-// template<int ROW, int COL>
 class Matrix {
     private:
     int rows;
@@ -21,7 +20,6 @@ public:
     ~Matrix();
     void print();
 
-    // Operators
     Matrix operator()(int row_index) const ;
     double& operator()(int row_index, int col_index);
     const double& operator()(int row_index, int col_index) const ;
@@ -33,14 +31,12 @@ public:
     bool operator==(const Matrix& other);
     bool operator!=(const Matrix& other);
 
-    // Gettrs
     int get_size() const ;
 
     std::vector<double> get_data() const ;
     std::string get_string() ;
     int get(int row_index, int col_index) ;
 
-    // The transpose operation
     Matrix Transpose();
 
     friend std::ostream& operator<<(std::ostream& os, const Matrix& A);
