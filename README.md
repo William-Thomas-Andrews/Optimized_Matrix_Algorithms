@@ -32,3 +32,31 @@ The goal is to explore **parallelism in C++** using Intel Threading Building Blo
 On macOS with Homebrew:
 ```bash
 brew install tbb
+## Installation
+```
+
+On Windows with vcpkg
+```shell
+vcpkg install tbb
+## Installation
+```
+
+On Linux (Debian/Ubuntu-based systems) with APT
+```bash
+sudo apt-get install libtbb-dev
+## Installation
+```
+
+
+How to run
+```bash
+# Clone the repository
+git clone https://github.com/William-Thomas-Andrews/Shortest_Path_Algorithms.git
+cd Shortest_Path_Algorithms
+
+# Build
+cd scripts/
+./configure.sh
+./build.sh
+./run.sh
+```
