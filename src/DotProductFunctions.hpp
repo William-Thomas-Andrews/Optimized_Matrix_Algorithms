@@ -105,7 +105,7 @@ Matrix dot_fine_grained(const Matrix& A, const Matrix& B) {
                 double sum = 0.0;
                 for (int k = 0; k < B.rows; k++) {
                     // to_return(i, j) += A(i, k) * B(k, j);
-                    sum += A(i, k) * B(k, j);
+                    // sum += A(i, k) * B(k, j);
                     // ops++;
                 }
                 to_return(i, j) = sum;
