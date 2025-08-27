@@ -1,29 +1,6 @@
 #pragma once
 
-
-#include <array>
-#include <iostream>
-#include <string>
-#include <stdexcept> 
-#include <vector>
-#include <initializer_list>
-#include <cmath>
-#include <cstdlib>
-#include <ranges>
-#include <concepts> 
-#include <iomanip>
-#include <thread>
-#include <future>
-#include <type_traits>
-#include <variant>
-#include <any>
-#include <execution>
-// #include <algorithm>
-// #include <chrono> 
-// #include <random>
-
 #include "Matrix.hpp"
-
 
 
 Matrix::Matrix(int r, int c) : rows(r), columns(c), data(r*c, 0.0) {}

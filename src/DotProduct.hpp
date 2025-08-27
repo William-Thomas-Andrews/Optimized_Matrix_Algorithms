@@ -1,9 +1,5 @@
 #pragma once
 
-#include <tbb/parallel_for.h> 
-#include <execution>
-#include <algorithm>
-
 #include "Matrix.hpp"
 
 

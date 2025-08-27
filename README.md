@@ -27,7 +27,7 @@ The goal is to explore **parallelism in C++** using Intel Threading Building Blo
 
 - **C++20 or later** (C++2b features supported)
 - [Intel TBB](https://github.com/oneapi-src/oneTBB) (for parallel `parallel_for`)
-- Standard C++ libraries (`<execution>`, `<thread>`, `<future>`, etc.)
+- Standard C++ libraries
 
 On macOS with Homebrew:
 ```bash
