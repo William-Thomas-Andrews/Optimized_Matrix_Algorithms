@@ -1,0 +1,3 @@
+/Users/willandrews/4dProjects/Matrix_Optimized/Optimized_Matrix_Algorithms/build/CMakeFiles/OPT.dir
+/Users/willandrews/4dProjects/Matrix_Optimized/Optimized_Matrix_Algorithms/build/CMakeFiles/edit_cache.dir
+/Users/willandrews/4dProjects/Matrix_Optimized/Optimized_Matrix_Algorithms/build/CMakeFiles/rebuild_cache.dir

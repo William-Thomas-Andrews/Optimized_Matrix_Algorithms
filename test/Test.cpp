@@ -1,11 +1,4 @@
-#include "Matrix.hpp"
-#include "DotProductFunctions.hpp"
-#include <iomanip>
-
-
-
-
-
+#include "Test.hpp"
 
 int main() {
     const int size = 500*500;

@@ -18,13 +18,12 @@ add_executable(OPT
     ${SRC_FILES}
 )
 
-target_include_directories(SPG
+target_include_directories(OPT
     PUBLIC ${CMAKE_SOURCE_DIR}/src
     PUBLIC ${CMAKE_SOURCE_DIR}/src/utils
     PUBLIC ${CMAKE_SOURCE_DIR}/src/graph
     PUBLIC ${CMAKE_SOURCE_DIR}/src/data
 )
 
-target_link_libraries( OPT
-    PUBLIC TBB                    # Here, for access without relying on the submodule, instead of <folly> write <Folly::folly>
-)
+target_include_directories(OPT PRIVATE include)
+target_link_libraries(OPT PRIVATE TBB::tbb)

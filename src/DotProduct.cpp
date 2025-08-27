@@ -1,7 +1,9 @@
-#include "Matrix.hpp"
 #include <tbb/parallel_for.h> 
 #include <execution>
 #include <algorithm>
+
+#include "DotProduct.hpp"
+
 
 // Normal Dot Product
 Matrix dot_serial(const Matrix& A, const Matrix& B) {
