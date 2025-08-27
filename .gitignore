@@ -3,3 +3,5 @@
 *.o
 *.gch
 a.out.dSYM
+.vscode
+build/
