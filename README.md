@@ -73,12 +73,12 @@ Done!
 Activating fine-grained matrix multiplication...
 Done!
 
-Serial duration: 16.8834 seconds
-Static partitioned parallel_for duration: 1.48466 seconds
-Dynamic partitioned parallel_for duration: 1.52797 seconds
-Fine grained duration: 1.63614 seconds
+Serial duration: 7.02779 seconds
+Static partitioned parallel_for duration: 1.46243 seconds
+Dynamic partitioned parallel_for duration: 1.49554 seconds
+Fine grained duration: 1.58466 seconds
 
-All results are equal!
+All resulting matrix outputs are equal!
 ```
 
 ## License

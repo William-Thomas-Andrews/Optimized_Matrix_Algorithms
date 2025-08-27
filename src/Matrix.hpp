@@ -4,6 +4,7 @@
 #include <stdexcept> 
 #include <vector> 
 #include <random>
+#include <thread>
 
 
 class Matrix {

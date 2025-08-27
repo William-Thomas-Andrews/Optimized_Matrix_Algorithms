@@ -6,15 +6,15 @@
 // Normal Dot Product
 Matrix dot_serial(const Matrix& A, const Matrix& B) {
     if (A.columns != B.rows) { throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows."); }
-    // int ops = 0;
+    // int ops = 0; // For counting operations to check operational accuracy. Slows process down.
     Matrix result = Matrix(A.rows, B.columns);
     for (int i = 0; i < A.rows; i++) {
         for (int j = 0; j < B.columns; j++) {
             double sum = 0.0;
             for (int k = 0; k < B.rows; k++) {
-                result(i, j) += A(i, k) * B(k, j);
-                // ops++;
+                // result(i, j) += A(i, k) * B(k, j); // Disabled because using the 'sum' container is significantly more cache efficient
                 sum += A(i, k) * B(k, j);
+                // ops++; // For counting operations to check operational accuracy. Slows process down.
             }
             result(i, j) = sum;
         }
@@ -25,19 +25,18 @@ Matrix dot_serial(const Matrix& A, const Matrix& B) {
 
 
 // parallel_for - #include <tbb/parallel_for.h> 
-// g++ -std=c++2b -I/opt/homebrew/Cellar/tbb/2022.0.0/include -L/opt/homebrew/Cellar/tbb/2022.0.0/lib -ltbb Main.cpp && ./a.out
 Matrix dot_static_parallel_for(const Matrix& A, const Matrix& B) {
     if (A.columns != B.rows) { throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows."); }
-    // std::atomic<int> ops = 0;
+    // std::atomic<int> ops = 0; 
     Matrix to_return = Matrix(A.rows, B.columns);
     tbb::parallel_for(tbb::blocked_range<int>(0, A.rows), [&](tbb::blocked_range<int> r) {
         for (int i = r.begin(); i < r.end(); i++) {
             for (int j = 0; j < B.columns; j++) {
                 double sum = 0.0;
                 for (int k = 0; k < B.rows; k++) {
-                    // to_return(i, j) += A(i, k) * B(k, j);
-                    // ops++;
-                    sum += A(i, k) * B(k, j);
+                    // to_return(i, j) += A(i, k) * B(k, j); // Disabled because using the 'sum' container is significantly more cache efficient
+                    sum += A(i, k) * B(k, j); 
+                    // ops++; // For counting operations to check operational accuracy. Slows process down.
                 }
                 to_return(i, j) = sum;
             }
@@ -48,19 +47,18 @@ Matrix dot_static_parallel_for(const Matrix& A, const Matrix& B) {
 }
 
 // parallel_for - #include <tbb/parallel_for.h> 
-// g++ -std=c++2b -I/opt/homebrew/Cellar/tbb/2022.0.0/include -L/opt/homebrew/Cellar/tbb/2022.0.0/lib -ltbb Main.cpp && ./a.out
 Matrix dot_dynamic_parallel_for(const Matrix& A, const Matrix& B) {
     if (A.columns != B.rows) { throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows."); }
-    // std::atomic<int> ops = 0;
+    // std::atomic<int> ops = 0; 
     Matrix to_return = Matrix(A.rows, B.columns);
     tbb::parallel_for(tbb::blocked_range<int>(0, A.rows), [&](tbb::blocked_range<int> r) {
         for (int i = r.begin(); i < r.end(); i++) {
             for (int j = 0; j < B.columns; j++) {
                 double sum = 0.0;
                 for (int k = 0; k < B.rows; k++) {
-                    // to_return(i, j) += A(i, k) * B(k, j);
+                    // to_return(i, j) += A(i, k) * B(k, j); // Disabled because using the 'sum' container is significantly more cache efficient
                     sum += A(i, k) * B(k, j);
-                    // ops++;
+                    // ops++; // For counting operations to check operational accuracy. Slows process down.
                 }
                 to_return(i, j) = sum;
             }
@@ -73,7 +71,7 @@ Matrix dot_dynamic_parallel_for(const Matrix& A, const Matrix& B) {
 
 Matrix dot_fine_grained(const Matrix& A, const Matrix& B) {
     if (A.columns != B.rows) { throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows."); }
-    // std::atomic<int> ops = 0;
+    // std::atomic<int> ops = 0; // For counting operations to check operational accuracy. Slows process down.
     Matrix to_return = Matrix(A.rows, B.columns);
     int num_threads = std::min((unsigned) A.rows, std::thread::hardware_concurrency());
     int items_per_thread = A.rows / (num_threads-1);
@@ -82,7 +80,7 @@ Matrix dot_fine_grained(const Matrix& A, const Matrix& B) {
             for (int j = 0; j < B.columns; j++) {
                 double sum = 0.0;
                 for (int k = 0; k < B.rows; k++) {
-                    // to_return(i, j) += A(i, k) * B(k, j);
+                    // to_return(i, j) += A(i, k) * B(k, j); // Disabled because using the 'sum' container is significantly more cache efficient
                     sum += A(i, k) * B(k, j);
                     // ops++;
                 }

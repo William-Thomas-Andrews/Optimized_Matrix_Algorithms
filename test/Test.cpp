@@ -87,7 +87,7 @@ int main() {
 
     if (result_serial == result_static_parallel_for and result_serial == result_dynamic_parallel_for and result_serial == result_fine_grained and
         result_static_parallel_for == result_dynamic_parallel_for and result_static_parallel_for == result_fine_grained and result_dynamic_parallel_for == result_fine_grained) {
-        std::cout << "All results are equal!" << std::endl;
+        std::cout << "All resulting matrix outputs are equal!" << std::endl;
     }
 
     if (matrix_C == matrix_D) {
