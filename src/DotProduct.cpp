@@ -71,7 +71,7 @@ Matrix dot_dynamic_parallel_for(const Matrix& A, const Matrix& B) {
 
 Matrix dot_fine_grained(const Matrix& A, const Matrix& B) {
     if (A.columns != B.rows) { throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows."); }
-    // std::atomic<int> ops = 0; // For counting operations to check operational accuracy. Slows process down.
+    // std::atomic<int> ops = 0; 
     Matrix to_return = Matrix(A.rows, B.columns);
     int num_threads = std::min((unsigned) A.rows, std::thread::hardware_concurrency());
     int items_per_thread = A.rows / (num_threads-1);
@@ -82,7 +82,7 @@ Matrix dot_fine_grained(const Matrix& A, const Matrix& B) {
                 for (int k = 0; k < B.rows; k++) {
                     // to_return(i, j) += A(i, k) * B(k, j); // Disabled because using the 'sum' container is significantly more cache efficient
                     sum += A(i, k) * B(k, j);
-                    // ops++;
+                    // ops++; // For counting operations to check operational accuracy. Slows process down.
                 }
                 to_return(i, j) = sum;
             }

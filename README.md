@@ -60,10 +60,6 @@ cd scripts/
 
 Example output
 ```txt
-[ 25%] Building CXX object CMakeFiles/OPT.dir/test/Test.cpp.o
-[ 50%] Linking CXX executable bin/OPT
-[100%] Built target OPT
-
 Activating Serial (single thread) matrix multiplication...
 Done!
 Activating static parallel-for matrix multiplication...
@@ -73,10 +69,10 @@ Done!
 Activating fine-grained matrix multiplication...
 Done!
 
-Serial duration: 7.02779 seconds
-Static partitioned parallel_for duration: 1.46243 seconds
-Dynamic partitioned parallel_for duration: 1.49554 seconds
-Fine grained duration: 1.58466 seconds
+Serial duration: 7.03247 seconds
+Static partitioned parallel_for duration: 1.46224 seconds
+Dynamic partitioned parallel_for duration: 1.49846 seconds
+Fine grained duration: 1.61704 seconds
 
 All resulting matrix outputs are equal!
 ```
