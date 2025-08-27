@@ -57,3 +57,30 @@ cd scripts/
 ./build.sh
 ./run.sh
 ```
+
+Example output
+```txt
+[ 25%] Building CXX object CMakeFiles/OPT.dir/test/Test.cpp.o
+[ 50%] Linking CXX executable bin/OPT
+[100%] Built target OPT
+
+Activating Serial (single thread) matrix multiplication...
+Done!
+Activating static parallel-for matrix multiplication...
+Done!
+Activating dynamic parallel-for matrix multiplication...
+Done!
+Activating fine-grained matrix multiplication...
+Done!
+
+Serial duration: 16.8834 seconds
+Static partitioned parallel_for duration: 1.48466 seconds
+Dynamic partitioned parallel_for duration: 1.52797 seconds
+Fine grained duration: 1.63614 seconds
+
+All results are equal!
+```
+
+## License
+This project is provided under the MIT License.
+Intel TBB is distributed under the Apache 2.0 License.

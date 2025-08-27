@@ -14,7 +14,7 @@ Matrix dot_serial(const Matrix& A, const Matrix& B) {
         for (int j = 0; j < B.columns; j++) {
             double sum = 0.0;
             for (int k = 0; k < B.rows; k++) {
-                // result(i, j) += A(i, k) * B(k, j);
+                result(i, j) += A(i, k) * B(k, j);
                 // ops++;
                 sum += A(i, k) * B(k, j);
             }
@@ -73,28 +73,6 @@ Matrix dot_dynamic_parallel_for(const Matrix& A, const Matrix& B) {
 }
 
 
-// // c++ STL parallel for_each
-// Matrix dot_for_each(const Matrix& A, const Matrix& B) {
-//     std::atomic<int> ops = 0;
-//     std::vector<int> rows(A.rows);
-//     // std::vector<int> 
-//     std::iota(rows.begin(), rows.end(), 0);
-//     if (A.columns != B.rows) {
-//         throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows.");
-//     }
-//     Matrix to_return = Matrix(A.rows, B.columns); 
-//     std::for_each(std::execution::par_unseq, std::begin(rows), std::end(rows), [&](int &n, Matrix to_return) {
-//             for (int j = 0; j < B.columns; j++) {
-//                 for (int k = 0; k < B.rows; k++) {
-//                     to_return(n, j) += A(n, k) * B(k, j);
-//                     ops++;
-//                 }
-//             }
-//         }
-//     );
-//     return to_return;
-// }
-
 Matrix dot_fine_grained(const Matrix& A, const Matrix& B) {
     if (A.columns != B.rows) { throw std::invalid_argument("Matrix 1 colums do not match Matrix 2 rows."); }
     // std::atomic<int> ops = 0;
@@ -107,7 +85,7 @@ Matrix dot_fine_grained(const Matrix& A, const Matrix& B) {
                 double sum = 0.0;
                 for (int k = 0; k < B.rows; k++) {
                     // to_return(i, j) += A(i, k) * B(k, j);
-                    // sum += A(i, k) * B(k, j);
+                    sum += A(i, k) * B(k, j);
                     // ops++;
                 }
                 to_return(i, j) = sum;
